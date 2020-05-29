@@ -25,6 +25,7 @@ namespace MyCourse
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStaticFiles();
             }
 
            
