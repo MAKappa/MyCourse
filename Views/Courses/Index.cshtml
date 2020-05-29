@@ -1,23 +1,27 @@
 
+
+@model  List<CourseViewModel> 
+          
     <h1>Cattalogo dei corsi</h1>
-@for(int i=0; i<=10;i++){
+
+@foreach(CourseViewModel course in Model){
     <div class="row">
 
         <div class="col-md-1">
-            <img src="~/image/svg.png" width="50">
+            <img src="@course.ImagePath" width="52" height="52">
         </div>
 
         <div class="col-md-5">
-            <h2>Nome del Corso</h2>
-            <author>Nome del author</author>
+            <h2>@course.Title</h2>
+            <author>@course.Author</author>
         </div>
 
         <div class="col-md-2">
-            <i class="fas fas fa-star"></i>
-            <i class="fas fas fa-star"></i>
-            <i class="fas fas fa-star"></i>
-            <i class="fas fas fa-star"></i>
-            <i class="fas fas fa-star"></i>
+            <i class="fas fa-star" style="color: yellow;"></i>
+            <i class="fas fa-star" style="color: yellow;"></i>
+            <i class="fas fa-star" style="color: yellow;"></i>
+            <i class="fas fa-star" style="color: yellow;"></i>
+            <i class="fas fa-star" style="color: yellow;"></i>          
         </div>
 
         <div class="col-md-2">
