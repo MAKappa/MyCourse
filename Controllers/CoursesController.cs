@@ -9,6 +9,7 @@ namespace MyCourse.Controllers
 {
     public class CoursesController : Controller
     {
+        //asas
         private readonly ICourseService courseService;
         public CoursesController(ICourseService courseService)
         {
