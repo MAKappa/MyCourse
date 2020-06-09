@@ -3,6 +3,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using MyCourse.Models.Services.Applications;
 using MyCourse.Models.ViewModels;
+using System.Threading.Tasks;
 
 namespace MyCourse.Controllers
 {
@@ -25,7 +26,7 @@ namespace MyCourse.Controllers
         public IActionResult Detail(int id)
         {
            
-            CourseDetailViewModel viewModel = courseService.GetCourse(id);
+           CourseDetailViewModel viewModel = courseService.GetCourse(id);
             ViewBag.Title = viewModel.Title;
             return View(viewModel);
         }
