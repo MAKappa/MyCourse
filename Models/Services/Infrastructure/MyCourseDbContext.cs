@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using MyCourse.Models.Entities;
 
-namespace MyCourse.Models.Entities
+namespace MyCourse.Models.Services.Infrastructure
 {
     public partial class MyCourseDbContext : DbContext
     {
@@ -15,8 +14,8 @@ namespace MyCourse.Models.Entities
         {
         }
 
-        public virtual DbSet<Courses> Courses { get; set; }
-        public virtual DbSet<Lessons> Lessons { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Lesson> Lessons { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,8 +30,32 @@ namespace MyCourse.Models.Entities
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.2-servicing-10034");
 
-            modelBuilder.Entity<Courses>(entity =>
-            {
+            modelBuilder.Entity<Course>(entity =>
+            {   
+                entity.ToTable("Courses");
+                entity.HasKey(course => course.Id);
+                //Mapping per owend types
+                entity.OwnsOne(course => course.CurrentPrice, builder => {
+                   builder.Property(money => money.Currency)
+                   .HasConversion<string>()
+                   .HasColumnName("CurrentPrice_Currency");
+                   builder.Property(money => money.Amount).HasColumnName("CurrentPrice_Amount"); 
+                });
+
+                
+                entity.OwnsOne(course => course.FullPrice, builder => {
+                    
+                    builder.Property(money => money.Currency).HasConversion<string>();
+                   
+                });
+                //Mapping per le relazioni
+                entity.HasMany(course => course.Lessons)
+                .WithOne(lesson => lesson.Course)
+                .HasForeignKey(lesson => lesson.CourseId);
+
+
+                #region Mapping generato automaticamente da tool di reverse engineering
+                /* 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Author)
@@ -72,10 +95,17 @@ namespace MyCourse.Models.Entities
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnType("TEXT (100)");
+                */
+                #endregion
             });
 
-            modelBuilder.Entity<Lessons>(entity =>
+            modelBuilder.Entity<Lesson>(entity =>
             {
+               
+               
+               
+                #region Mapping generato automaticamente da tool di reverse engineering
+                /*
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Description).HasColumnType("TEXT (10000)");
@@ -92,6 +122,9 @@ namespace MyCourse.Models.Entities
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.Lessons)
                     .HasForeignKey(d => d.CourseId);
+
+                */
+                #endregion
             });
         }
     }
