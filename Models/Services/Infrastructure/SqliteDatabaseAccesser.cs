@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
+using MyCourse.Models.Options;
 
 namespace MyCourse.Models.Services.Infrastructure
 {
-    public class SqliteDatabaseAccessor : IDatabaseAccesser
+    public class SqliteDatabaseAccesser : IDatabaseAccesser
     {
+        private readonly IOptionsMonitor<ConnectionStringsOptions> connectionStringOptions;
+        public SqliteDatabaseAccesser(IOptionsMonitor<ConnectionStringsOptions> connectionStringOptions)
+        {
+            this.connectionStringOptions = connectionStringOptions;
+        }
+
+
         public DataSet Query(FormattableString formattableQuery)
         {   
             //Creiamo dei SqliteParameter a partire dalla FormattableString
@@ -21,8 +30,10 @@ namespace MyCourse.Models.Services.Infrastructure
             }
             string query = formattableQuery.ToString();
 
+            string connectionString = connectionStringOptions.CurrentValue.Default;
+
             //Colleghiamoci al database Sqlite, inviamo la query e leggiamo i risultati
-            using(var conn = new SqliteConnection("Data Source=Data/MyCourse.db"))
+            using(var conn = new SqliteConnection(connectionString))
             {
                 conn.Open();
                 using (var cmd = new SqliteCommand(query, conn))

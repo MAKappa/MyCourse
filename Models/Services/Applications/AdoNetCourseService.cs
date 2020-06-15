@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using MyCourse.Models.Options;
 using MyCourse.Models.Services.Infrastructure;
 using MyCourse.Models.ViewModels;
+using Microsoft.Extensions.Options;
+
 
 
 
@@ -12,10 +15,12 @@ namespace MyCourse.Models.Services.Applications
     public class AdoNetCourseService : ICourseService
     {
         private readonly IDatabaseAccesser db;
+        private readonly IOptionsMonitor<CoursesOptions> coursesOptions;
 
-        public AdoNetCourseService(IDatabaseAccesser db)
+        public AdoNetCourseService(IDatabaseAccesser db, IOptionsMonitor<CoursesOptions> coursesOptions)
         {
             this.db=db;
+            this.coursesOptions=coursesOptions;
         }
 
         
