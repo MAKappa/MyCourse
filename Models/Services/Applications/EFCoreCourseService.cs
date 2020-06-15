@@ -4,6 +4,8 @@ using MyCourse.Models.Services.Applications;
 using MyCourse.Models.Services.Infrastructure;
 using MyCourse.Models.ViewModels;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyCourse.Models.Services.Infrastructure
 {
@@ -16,38 +18,28 @@ namespace MyCourse.Models.Services.Infrastructure
 
         }
 
-        public  CourseDetailViewModel GetCourse(int id)
+    
+
+        public async Task<CourseDetailViewModel> GetCourseAsync(int id)
         {
-            CourseDetailViewModel viewModel= dbContext.Courses
+             IQueryable<CourseDetailViewModel> queryLinq =  dbContext.Courses
+            .AsNoTracking()
+            .Include(course  => course.Lessons)
             .Where(course => course.Id == id)
-            .Select(course => new CourseDetailViewModel
-            {
-                Id=course.Id,
-                Title=course.Title,
-                ImagePath=course.ImagePath,
-                Author=course.Author,
-                Rating=course.Rating,
-                CurrentPrice=course.CurrentPrice,
-                FullPrice=course.FullPrice
-            }).Single();
+            .Select(course =>  CourseDetailViewModel.FromEntity(course));
             
+            CourseDetailViewModel viewModel= await queryLinq.SingleAsync();
             return viewModel;
         }
 
-        public List<CourseViewModel> GetCourses()
+        
+
+        public async Task<List<CourseViewModel>> GetCoursesAsync()
         {
-            List<CourseViewModel> courses = dbContext.Courses.Select(course =>
-            new CourseViewModel{
-                Id=course.Id,
-                Title=course.Title,
-                ImagePath=course.ImagePath,
-                Author=course.Author,
-                Rating=course.Rating,
-                CurrentPrice=course.CurrentPrice,
-                FullPrice=course.FullPrice
-
-
-            }).ToList();
+            IQueryable<CourseViewModel> queryLinq = dbContext.Courses
+            .AsNoTracking()
+            .Select(course => CourseViewModel.FromEntity(course));
+            List<CourseViewModel> courses = await queryLinq.ToListAsync();
             return courses;
         }
     }

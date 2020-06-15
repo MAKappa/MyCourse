@@ -4,11 +4,12 @@ using System.Data;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 
+
 namespace MyCourse.Models.Services.Infrastructure
 {
     public class SqliteDatabaseAccessor : IDatabaseAccesser
     {
-        public DataSet Query(FormattableString formattableQuery)
+        public async Task<DataSet> QueryAsync(FormattableString formattableQuery)
         {   
             //Creiamo dei SqliteParameter a partire dalla FormattableString
             var queryArguments = formattableQuery.GetArguments();
@@ -24,11 +25,12 @@ namespace MyCourse.Models.Services.Infrastructure
             //Colleghiamoci al database Sqlite, inviamo la query e leggiamo i risultati
             using(var conn = new SqliteConnection("Data Source=Data/MyCourse.db"))
             {
-                conn.Open();
+                await conn.OpenAsync();
                 using (var cmd = new SqliteCommand(query, conn))
                 {
                     cmd.Parameters.AddRange(sqliteParameters);
-                    using (var reader = cmd.ExecuteReader())
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
                         var dataSet = new DataSet();
                         
