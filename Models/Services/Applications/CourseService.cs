@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MyCourse.Models.Enums;
 using MyCourse.Models.ValueTypes;
 using MyCourse.Models.ViewModels;
@@ -56,6 +57,16 @@ namespace MyCourse.Models.Services.Applications
             }
 
             return course;
+        }
+
+        public Task<List<CourseViewModel>> GetCoursesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CourseDetailViewModel> GetCourseAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

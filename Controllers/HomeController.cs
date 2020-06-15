@@ -7,6 +7,7 @@ namespace MyCourse.Controllers
         public IActionResult Index()
         {
             //return Content("Ciao");
+            ViewData["Title"] = "Benvenuto su MyCourse!";
             return View();
         }
     }

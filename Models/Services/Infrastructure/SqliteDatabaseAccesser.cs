@@ -6,6 +6,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using MyCourse.Models.Options;
 
+
 namespace MyCourse.Models.Services.Infrastructure
 {
     public class SqliteDatabaseAccesser : IDatabaseAccesser
@@ -35,11 +36,12 @@ namespace MyCourse.Models.Services.Infrastructure
             //Colleghiamoci al database Sqlite, inviamo la query e leggiamo i risultati
             using(var conn = new SqliteConnection(connectionString))
             {
-                conn.Open();
+                await conn.OpenAsync();
                 using (var cmd = new SqliteCommand(query, conn))
                 {
                     cmd.Parameters.AddRange(sqliteParameters);
-                    using (var reader = cmd.ExecuteReader())
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
                         var dataSet = new DataSet();
                         
