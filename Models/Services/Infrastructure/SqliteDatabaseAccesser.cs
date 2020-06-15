@@ -18,7 +18,7 @@ namespace MyCourse.Models.Services.Infrastructure
         }
 
 
-        public DataSet Query(FormattableString formattableQuery)
+        public async Task<DataSet> QueryAsync(FormattableString formattableQuery)
         {   
             //Creiamo dei SqliteParameter a partire dalla FormattableString
             var queryArguments = formattableQuery.GetArguments();
@@ -61,5 +61,7 @@ namespace MyCourse.Models.Services.Infrastructure
                 }
             }
         }
+
+        
     }
 }
