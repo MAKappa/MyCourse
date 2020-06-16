@@ -2,12 +2,21 @@
 
 @model  List<CourseViewModel> 
 
-     <h1>@ViewBag.Title</h1>
+<div class="row">
+    <div class="col-md-8">
+        <h1>@ViewBag.Title</h1>
+    </div>
+
+    <div class="col-md-4 d-flex align-items-center" >
 
     <form asp-controller="Courses" asp-action="Index" method="GET">
     <input type="text"  name="search"  placeholder="Cerca...">
     <button><i class="fas fa-search"></i></button>
     </form>
+    </div>
+
+
+</div>
 
     
 
@@ -57,16 +66,26 @@
             }
         </div>
 
-
-
         <div class="col-md-2">
             <a class="btn btn-outline-primary" asp-action="Detail" asp-controller="Courses" asp-route-id="@course.Id">Detaglio Corsi</a>   
         </div>
-
-
     </div>
 
-
 }
+
+
+<nav aria-label="Paginazione">
+    <ul class="pagination">
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" asp-route-page="1">Page 1 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item ">
+            <a class="page-link" asp-route-page="2" >Page 2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" asp-route-page="3">Page 3</a>
+        </li>
+    </ul>
+</nav>
 
     

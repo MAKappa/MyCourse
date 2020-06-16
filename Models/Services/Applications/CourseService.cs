@@ -59,7 +59,7 @@ namespace MyCourse.Models.Services.Applications
             return course;
         }
 
-        public Task<List<CourseViewModel>> GetCoursesAsync()
+        public Task<List<CourseViewModel>> GetCoursesAsync(string search, int page)
         {
             throw new NotImplementedException();
         }

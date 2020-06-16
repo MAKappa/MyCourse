@@ -33,9 +33,10 @@ namespace MyCourse
                 OptionsBuilder.UseSqlite(connectionString);
             });
             
-
+            //options con classe ConnectionStringsOptions.cs che prende da appSettings.json
             services.Configure<ConnectionStringsOptions>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<CoursesOptions>(Configuration.GetSection("Courses"));
+            
        
         }
 
