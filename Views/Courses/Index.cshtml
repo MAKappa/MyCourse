@@ -4,7 +4,10 @@
 
      <h1>@ViewBag.Title</h1>
 
-    
+    <form asp-controller="Courses" asp-action="Index" method="GET">
+    <input type="text"  name="search"  placeholder="Cerca...">
+    <button><i class="fas fa-search"></i></button>
+    </form>
 
     
 

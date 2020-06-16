@@ -24,14 +24,15 @@ namespace MyCourse
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //services.AddTransient<ICourseService, AdoNetCourseService>();
-           // services.AddTransient<IDatabaseAccesser, SqliteDatabaseAccessor>();
+            //services.AddTransient<IDatabaseAccesser, SqliteDatabaseAccesser>();
             services.AddTransient<ICourseService,EFCoreCourseService>();
             //services.AddDbContext<MyCourseDbContext>();
+            
             services.AddDbContextPool<MyCourseDbContext>(OptionsBuilder=>{
                 string connectionString= Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
                 OptionsBuilder.UseSqlite(connectionString);
             });
-
+            
 
             services.Configure<ConnectionStringsOptions>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<CoursesOptions>(Configuration.GetSection("Courses"));
