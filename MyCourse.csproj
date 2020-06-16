@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <UserSecretsId>MyCourse</UserSecretsId>
+    <!--<UserSecretsId>MyCourse</UserSecretsId>   quando esegui commando dotnet users-secrets "ConnectionStrings: Default" "Data Source=Data/MyCourse.db" allora ti chiedera di aggiungere questo UserSecretsId -->
   </PropertyGroup>
 
   <ItemGroup>
